@@ -73,16 +73,16 @@ function s:MoveVertically(first, last, distance)
     let l:last  = line(a:last)
 
     " Compute the destination line. Instead of simply incrementing the line
-    " number, we move the cursor with `j` and `k`. This ensures that the
+    " number, we move the cursor with `J` and `K`. This ensures that the
     " destination line is in bounds and it also goes past closed folds.
     let l:old_pos = getcurpos()
     if a:distance < 0
         call cursor(l:first, 1)
-        execute 'normal!' (-a:distance).'k'
+        execute 'normal!' (-a:distance).'K'
         let l:after = line('.') - 1
     else
         call cursor(l:last, 1)
-        execute 'normal!' a:distance.'j'
+        execute 'normal!' a:distance.'J'
         let l:after = (foldclosedend('.') == -1 ? line('.') : foldclosedend('.'))
     endif
 
@@ -246,7 +246,7 @@ function s:HalfPageSize()
 endfunction
 
 " Equivalent keys for <A-KEY> on macOS (see issue #49)
-let s:mac_map_keys = {'k': '˚', 'j': '∆', 'h': '˙', 'l': '¬'}
+let s:mac_map_keys = {'K': '˚', 'J': '∆', 'H': '˙', 'L': '¬'}
 
 function s:MoveKey(key)
     " If on macOS, use the equivalent key for <A-KEY>
@@ -286,13 +286,13 @@ nnoremap <silent> <Plug>MoveCharLeft            :<C-u> silent call <SID>MoveChar
 
 
 if g:move_map_keys
-    execute 'vmap' s:VisualMoveKey('j') '<Plug>MoveBlockDown'
-    execute 'vmap' s:VisualMoveKey('k') '<Plug>MoveBlockUp'
-    execute 'vmap' s:VisualMoveKey('h') '<Plug>MoveBlockLeft'
-    execute 'vmap' s:VisualMoveKey('l') '<Plug>MoveBlockRight'
+    execute 'vmap' s:VisualMoveKey('J') '<Plug>MoveBlockDown'
+    execute 'vmap' s:VisualMoveKey('K') '<Plug>MoveBlockUp'
+    execute 'vmap' s:VisualMoveKey('H') '<Plug>MoveBlockLeft'
+    execute 'vmap' s:VisualMoveKey('L') '<Plug>MoveBlockRight'
 
-    execute 'nmap' s:MoveKey('j') '<Plug>MoveLineDown'
-    execute 'nmap' s:MoveKey('k') '<Plug>MoveLineUp'
-    execute 'nmap' s:MoveKey('h') '<Plug>MoveCharLeft'
-    execute 'nmap' s:MoveKey('l') '<Plug>MoveCharRight'
+    execute 'nmap' s:MoveKey('J') '<Plug>MoveLineDown'
+    execute 'nmap' s:MoveKey('K') '<Plug>MoveLineUp'
+    execute 'nmap' s:MoveKey('H') '<Plug>MoveCharLeft'
+    execute 'nmap' s:MoveKey('L') '<Plug>MoveCharRight'
 endif
